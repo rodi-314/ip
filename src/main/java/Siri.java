@@ -12,10 +12,8 @@ public class Siri {
         System.out.println("    What can I do for you?");
         printHorizontalLine();
 
-        // Initialise list
-        String[] list = new String[100];
-        int listCount = 0;
-
+        // Initialise taskList
+        TaskList taskList = new TaskList();
 
         // Request for user input
         String line = "";
@@ -26,15 +24,36 @@ public class Siri {
             line = in.nextLine();
             printHorizontalLine();
 
-            if (line.equals("list")) {
-                for (int count = 0; count < listCount; count++) {
-                    System.out.printf("    %d. %s%n", count + 1, list[count]);
+            if (line.equals("list")) { // List tasks
+                System.out.println("    Here are the tasks in your list:");
+                taskList.printTaskList();
+
+            } else if (line.startsWith("mark") || line.startsWith("unmark")) { // Mark/Unmark tasks
+                String taskNoString = line.split(" ")[1];
+                try {
+                    int taskNo = Integer.parseInt(taskNoString);
+                    Task task = taskList.getTask(taskNo);
+                    task.setStatus(line.startsWith("mark"));
+                    if (line.startsWith("mark")) {
+                        System.out.println("     Nice! I've marked this task as done:");
+                    } else {
+                        System.out.println("     OK, I've marked this task as not done yet:");
+                    }
+                    System.out.println("       " + task.getTaskString());
+
+                } catch (NumberFormatException | NullPointerException |
+                         ArrayIndexOutOfBoundsException e) { // Invalid task number inputted
+                    System.out.println("    Please input a valid integer task number");
                 }
-                printHorizontalLine();
-            } else if (!line.equals("bye")) {
-                list[listCount] = line;
-                listCount++;
+
+            } else if (!line.equals("bye")) { // Add new task
+                Task task = new Task(line);
+                taskList.addTask(task);
                 System.out.println("    added: " + line);
+            }
+
+            // Print line if loop continues
+            if (!line.equals("bye")) {
                 printHorizontalLine();
             }
         }
