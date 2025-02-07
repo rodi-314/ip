@@ -20,4 +20,8 @@ public class TaskList {
     public Task getTask(int taskNo) {
         return this.taskList[taskNo - 1];
     }
+
+    public int getTaskCount() {
+        return this.taskCount;
+    }
 }

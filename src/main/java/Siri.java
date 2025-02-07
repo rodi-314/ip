@@ -5,12 +5,26 @@ public class Siri {
         System.out.println("    ____________________________________________________________");
     }
 
-    public static void main(String[] args) {
-        // Welcome message
+    public static void printWelcomeMessage() {
         printHorizontalLine();
         System.out.println("    Hello! I'm Siri. " + "\uD83D\uDE0A");
         System.out.println("    What can I do for you?");
         printHorizontalLine();
+    }
+
+    public static void printTaskAdded(String taskString, int taskCount) {
+        System.out.println("    Got it. I've added this task:");
+        System.out.println("      " + taskString);
+        System.out.println("    Now you have " + taskCount + " tasks in the list.");
+    }
+
+    public static void printExitMessage() {
+        System.out.println("    Bye. Hope to see you again soon!");
+        printHorizontalLine();
+    }
+
+    public static void main(String[] args) {
+        printWelcomeMessage();
 
         // Initialise taskList
         TaskList taskList = new TaskList();
@@ -46,10 +60,30 @@ public class Siri {
                     System.out.println("    Please input a valid integer task number");
                 }
 
-            } else if (!line.equals("bye")) { // Add new task
-                Task task = new Task(line);
-                taskList.addTask(task);
-                System.out.println("    added: " + line);
+            } else if (line.startsWith("todo")) { // Add new todo
+                String description = line.replace("todo ", "");
+                Todo todo = new Todo(description);
+                taskList.addTask(todo);
+                printTaskAdded(todo.getTaskString(), taskList.getTaskCount());
+            } else if (line.startsWith("deadline")) { // Add new deadline
+                int byIndex = line.indexOf("/by");
+                String description = line.substring(9, byIndex - 1);
+                String by = line.substring(byIndex + 4);
+                Deadline deadline = new Deadline(description, by);
+                taskList.addTask(deadline);
+                printTaskAdded(deadline.getTaskString(), taskList.getTaskCount());
+            } else if (line.startsWith("event")) { // Add new event
+                int fromIndex = line.indexOf("/from");
+                int toIndex = line.indexOf("/to");
+                String description = line.substring(6, fromIndex - 1);
+                String from = line.substring(fromIndex + 6, toIndex - 1);
+                String to = line.substring(toIndex + 4);
+                Event event = new Event(description, from, to);
+                taskList.addTask(event);
+                printTaskAdded(event.getTaskString(), taskList.getTaskCount());
+
+            } else if (!line.equals("bye")) { // Invalid input
+                System.out.println("    Please provide a valid input");
             }
 
             // Print line if loop continues
@@ -58,8 +92,6 @@ public class Siri {
             }
         }
 
-        // Exit message
-        System.out.println("    Bye. Hope to see you again soon!");
-        printHorizontalLine();
+        printExitMessage();
     }
 }
