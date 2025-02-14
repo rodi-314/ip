@@ -1,3 +1,5 @@
+package siri.tasks;
+
 public class Event extends Task {
 
     protected String from;

@@ -1,3 +1,5 @@
+import siri.tasks.*;
+
 import java.util.Scanner;
 
 public class Siri {
