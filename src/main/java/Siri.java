@@ -1,8 +1,14 @@
+import siri.files.SaveFile;
 import siri.tasks.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Siri {
+    // Initialise taskList
+    private static TaskList taskList = new TaskList();
+
     public static void printHorizontalLine() {
         System.out.println("    ____________________________________________________________");
     }
@@ -25,11 +31,61 @@ public class Siri {
         printHorizontalLine();
     }
 
+    public static void loadTasks() {
+        try {
+            Scanner scanner = SaveFile.getScanner();
+            while (scanner.hasNext()) {
+                String line = scanner.nextLine();
+                String[] data = line.split("\\|");
+                if (data[0].equals("T")) {
+                    taskList.addTask(new Todo(data[2], Boolean.parseBoolean(data[1])));
+                } else if (data[0].equals("D")) {
+                    taskList.addTask(new Deadline(data[2], Boolean.parseBoolean(data[1]), data[3]));
+                } else {
+                    taskList.addTask(new Event(data[2], Boolean.parseBoolean(data[1]), data[3], data[4]));
+                }
+            }
+        } catch (FileNotFoundException e) {
+            try {
+                SaveFile.clearFile();
+            } catch (IOException ex) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
+        }
+    }
+
+    public static void saveTasks(TaskList taskList) {
+        try {
+            SaveFile.clearFile();
+            for (int count = 0; count < taskList.getTaskCount(); count++) {
+                Task task = taskList.getTaskList()[count];
+                if (task.getClass() == Todo.class) {
+                    SaveFile.appendToFile("T" + "|" +
+                            task.getStatus() + "|" +
+                            task.getDescription() + System.lineSeparator());
+                } else if (task.getClass() == Deadline.class) {
+                    Deadline deadline = (Deadline) task;
+                    SaveFile.appendToFile("D" + "|" +
+                            deadline.getStatus() + "|" +
+                            deadline.getDescription() + "|" +
+                            deadline.getBy() + System.lineSeparator());
+                } else {
+                    Event event = (Event) task;
+                    SaveFile.appendToFile("E" + "|" +
+                            event.getStatus() + "|" +
+                            event.getDescription() + "|" +
+                            event.getFrom() + "|" +
+                            event.getTo() + System.lineSeparator());
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         printWelcomeMessage();
-
-        // Initialise taskList
-        TaskList taskList = new TaskList();
+        loadTasks();
 
         // Request for user input
         String line = "";
@@ -85,14 +141,14 @@ public class Siri {
                         throw new SiriException("    Oops! The description of a todo cannot be empty. \uD83D\uDE14");
                     }
                     String description = line.replace("todo ", "");
-                    Todo todo = new Todo(description);
+                    Todo todo = new Todo(description, false);
                     taskList.addTask(todo);
                     printTaskAdded(todo.getTaskString(), taskList.getTaskCount());
                 } else if (line.startsWith("deadline")) { // Add new deadline
                     int byIndex = line.indexOf("/by");
                     String description = line.substring(9, byIndex - 1);
                     String by = line.substring(byIndex + 4);
-                    Deadline deadline = new Deadline(description, by);
+                    Deadline deadline = new Deadline(description, false, by);
                     taskList.addTask(deadline);
                     printTaskAdded(deadline.getTaskString(), taskList.getTaskCount());
                 } else if (line.startsWith("event")) { // Add new event
@@ -101,7 +157,7 @@ public class Siri {
                     String description = line.substring(6, fromIndex - 1);
                     String from = line.substring(fromIndex + 6, toIndex - 1);
                     String to = line.substring(toIndex + 4);
-                    Event event = new Event(description, from, to);
+                    Event event = new Event(description, false, from, to);
                     taskList.addTask(event);
                     printTaskAdded(event.getTaskString(), taskList.getTaskCount());
 
@@ -111,6 +167,16 @@ public class Siri {
                 }
             } catch (SiriException e) {
                 System.out.println(e.getMessage());
+            }
+
+            // Update saveFile if task list changes
+            if (line.startsWith("mark") ||
+                    line.startsWith("unmark") ||
+                    line.startsWith("delete") ||
+                    line.startsWith("todo") ||
+                    line.startsWith("deadline") ||
+                    line.startsWith("event")) {
+                saveTasks(taskList);
             }
 
             // Print line if loop continues
