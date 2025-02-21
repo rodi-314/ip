@@ -20,10 +20,10 @@ public class Siri {
         printHorizontalLine();
     }
 
-    public static void printTaskAdded(String taskString, int taskCount) {
+    public static void printTaskAdded(String taskString) {
         System.out.println("    Got it. I've added this task:");
         System.out.println("      " + taskString);
-        System.out.println("    Now you have " + taskCount + " tasks in the list.");
+        System.out.println("    Now you have " + taskList.getTaskCount() + " tasks in the list.");
     }
 
     public static void printExitMessage() {
@@ -57,8 +57,7 @@ public class Siri {
     public static void saveTasks(TaskList taskList) {
         try {
             SaveFile.clearFile();
-            for (int count = 0; count < taskList.getTaskCount(); count++) {
-                Task task = taskList.getTaskList()[count];
+            for (Task task: taskList.getTaskList()) {
                 if (task.getClass() == Todo.class) {
                     SaveFile.appendToFile("T" + "|" +
                             task.getStatus() + "|" +
@@ -115,7 +114,7 @@ public class Siri {
                         System.out.println("       " + task.getTaskString());
 
                     } catch (NumberFormatException | NullPointerException |
-                             ArrayIndexOutOfBoundsException e) { // Invalid task number inputted
+                             IndexOutOfBoundsException e) { // Invalid task number inputted
                         System.out.println("    Please input a valid integer task number");
                     }
 
@@ -132,7 +131,7 @@ public class Siri {
                         System.out.println("       " + task.getTaskString());
 
                     } catch (NumberFormatException | NullPointerException |
-                             ArrayIndexOutOfBoundsException e) { // Invalid task number inputted
+                             IndexOutOfBoundsException e) { // Invalid task number inputted
                         System.out.println("    Please input a valid integer task number");
                     }
 
@@ -143,14 +142,14 @@ public class Siri {
                     String description = line.replace("todo ", "");
                     Todo todo = new Todo(description, false);
                     taskList.addTask(todo);
-                    printTaskAdded(todo.getTaskString(), taskList.getTaskCount());
+                    printTaskAdded(todo.getTaskString());
                 } else if (line.startsWith("deadline")) { // Add new deadline
                     int byIndex = line.indexOf("/by");
                     String description = line.substring(9, byIndex - 1);
                     String by = line.substring(byIndex + 4);
                     Deadline deadline = new Deadline(description, false, by);
                     taskList.addTask(deadline);
-                    printTaskAdded(deadline.getTaskString(), taskList.getTaskCount());
+                    printTaskAdded(deadline.getTaskString());
                 } else if (line.startsWith("event")) { // Add new event
                     int fromIndex = line.indexOf("/from");
                     int toIndex = line.indexOf("/to");
@@ -159,7 +158,7 @@ public class Siri {
                     String to = line.substring(toIndex + 4);
                     Event event = new Event(description, false, from, to);
                     taskList.addTask(event);
-                    printTaskAdded(event.getTaskString(), taskList.getTaskCount());
+                    printTaskAdded(event.getTaskString());
 
                 } else if (!line.equals("bye")) { // Invalid input
                     throw new SiriException("    Oops! I'm sorry, but I don't know what that means... \uD83D\uDE14 " +

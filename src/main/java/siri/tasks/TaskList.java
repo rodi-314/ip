@@ -1,40 +1,37 @@
 package siri.tasks;
 
+import java.util.ArrayList;
+
 public class TaskList {
-    private Task[] taskList;
-    private int taskCount = 0;
+    private ArrayList<Task> taskList;
 
     public TaskList() {
-        this.taskList = new Task[100];
+        this.taskList = new ArrayList<Task>();
     }
 
     public void addTask(Task task) {
-        this.taskList[taskCount] = task;
-        this.taskCount++;
+        this.taskList.add(task);
     }
 
     public void removeTask(int taskNo) {
-        for (int count = taskNo - 1; count < taskCount - 1; count++) {
-            taskList[count] = taskList[count + 1];
-        }
-        taskCount--;
+        this.taskList.remove(taskNo - 1);
     }
 
     public void printTaskList() {
-        for (int count = 0; count < taskCount; count++) {
-            System.out.printf("    %d. %s%n", count + 1, this.taskList[count].getTaskString());
+        for (int count = 0; count < taskList.size(); count++) {
+            System.out.printf("    %d. %s%n", count + 1, this.taskList.get(count).getTaskString());
         }
     }
 
     public Task getTask(int taskNo) {
-        return this.taskList[taskNo - 1];
+        return this.taskList.get(taskNo - 1);
+    }
+
+    public ArrayList<Task> getTaskList() {
+        return this.taskList;
     }
 
     public int getTaskCount() {
-        return this.taskCount;
-    }
-
-    public Task[] getTaskList() {
-        return this.taskList;
+        return this.taskList.size();
     }
 }
