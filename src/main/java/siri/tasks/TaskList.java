@@ -26,4 +26,8 @@ public class TaskList {
     public int getTaskCount() {
         return this.taskCount;
     }
+
+    public Task[] getTaskList() {
+        return this.taskList;
+    }
 }
