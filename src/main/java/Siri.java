@@ -63,6 +63,23 @@ public class Siri {
                         System.out.println("    Please input a valid integer task number");
                     }
 
+                } else if (line.startsWith("delete")) { // Delete tasks
+                    String taskNoString = line.split(" ")[1];
+                    try {
+                        int taskNo = Integer.parseInt(taskNoString);
+                        Task task = taskList.getTask(taskNo);
+                        if (taskNo > taskList.getTaskCount()) {
+                            throw new ArrayIndexOutOfBoundsException();
+                        }
+                        taskList.removeTask(taskNo);
+                        System.out.println("     Noted. I've removed this task:");
+                        System.out.println("       " + task.getTaskString());
+
+                    } catch (NumberFormatException | NullPointerException |
+                             ArrayIndexOutOfBoundsException e) { // Invalid task number inputted
+                        System.out.println("    Please input a valid integer task number");
+                    }
+
                 } else if (line.startsWith("todo")) { // Add new todo
                     if (line.equals("todo")) {
                         throw new SiriException("    Oops! The description of a todo cannot be empty. \uD83D\uDE14");
