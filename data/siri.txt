@@ -1,0 +1,7 @@
+T|true|1
+T|true|2
+E|false|1|2|3
+T|false|4
+T|true|6
+T|false|7
+D|true|8|9

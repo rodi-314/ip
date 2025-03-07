@@ -1,4 +1,4 @@
-package siri.files;
+package siri.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
