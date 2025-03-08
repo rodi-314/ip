@@ -11,6 +11,10 @@ public class Parser {
         return userInput.equals("list");
     }
 
+    public static boolean isFindCommand(String userInput) {
+        return userInput.startsWith("find");
+    }
+
     public static boolean isMarkCommand(String userInput) {
         return userInput.startsWith("mark");
     }
@@ -33,6 +37,13 @@ public class Parser {
 
     public static boolean isEventCommand(String userInput) {
         return userInput.startsWith("event");
+    }
+
+    public static String parseFindCommand(String userInput) {
+        if (userInput.equals("find")) {
+            throw new NullPointerException();
+        }
+        return userInput.replace("find ", "");
     }
 
     public static Task parseMarkCommand(String userInput, TaskList taskList) throws NumberFormatException, NullPointerException {

@@ -19,7 +19,7 @@ public class TaskList {
 
     public void printTaskList() {
         for (int count = 0; count < taskList.size(); count++) {
-            System.out.printf("    %d. %s%n", count + 1, this.taskList.get(count).getTaskString());
+            System.out.printf("     %d. %s%n", count + 1, this.taskList.get(count).getTaskString());
         }
     }
 
@@ -33,5 +33,15 @@ public class TaskList {
 
     public int getTaskCount() {
         return this.taskList.size();
+    }
+
+    public void printFindTasks(String description) {
+        int foundCount = 1;
+        for (Task task : this.taskList) {
+            if (task.getDescription().contains(description)) {
+                System.out.printf("    %d. %s%n", foundCount, task.getTaskString());
+                foundCount++;
+            }
+        }
     }
 }
