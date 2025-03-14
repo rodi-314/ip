@@ -10,9 +10,9 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
 1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project
    first)
 1. Open the project into Intellij as follows:
-    1. Click `Open`.
-    1. Select the project directory, and click `OK`.
-    1. If there are any further prompts, accept the defaults.
+   1. Click `Open`.
+   1. Select the project directory, and click `OK`.
+   1. If there are any further prompts, accept the defaults.
 1. Configure the project to use **JDK 17** (not other versions) as explained
    in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
    In the same dialog, set the **Project language level** field to the `SDK default` option.
@@ -65,15 +65,17 @@ Adds a deadline task to the task list.
 
 Format: `deadline DESCRIPTION /by DEADLINE`
 
+> `DEADLINE` format: `yyyy-mm-ddThh:mm`
+
 Examples:
-- `deadline return book /by Sunday`
-- `deadline cook dinner /by 6pm`
+- `deadline return book /by 2025-03-14T18:00`
+- `deadline cook dinner /by 2025-01-01T19:30`
 
 Expected output:
 ```
      ____________________________________________________________
      Got it. I've added this task:
-       [D][ ] return book (by: Sunday)
+       [D][ ] return book (by: 14 Mar 2025 06:00 pm)
      Now you have 2 tasks in the list.
      ____________________________________________________________
 ```
@@ -108,7 +110,7 @@ Expected output:
      ____________________________________________________________
      Here are the tasks in your list:
      1. [T][ ] borrow book
-     2. [D][ ] return book (by: Sunday)
+     2. [D][ ] return book (by: 14 Mar 2025 06:00 pm)
      3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
      ____________________________________________________________
 ```
@@ -128,7 +130,7 @@ Expected output:
      ____________________________________________________________
      Here are the matching tasks in your list:
      1. [T][ ] borrow book
-     2. [D][ ] return book (by: Sunday)
+     2. [D][ ] return book (by: 14 Mar 2025 06:00 pm)
      ____________________________________________________________
 ```
 

@@ -65,15 +65,17 @@ Adds a deadline task to the task list.
 
 Format: `deadline DESCRIPTION /by DEADLINE`
 
+> `DEADLINE` format: `yyyy-mm-ddThh:mm`
+
 Examples:
-- `deadline return book /by Sunday`
-- `deadline cook dinner /by 6pm`
+- `deadline return book /by 2025-03-14T18:00`
+- `deadline cook dinner /by 2025-01-01T19:30`
 
 Expected output:
 ```
      ____________________________________________________________
      Got it. I've added this task:
-       [D][ ] return book (by: Sunday)
+       [D][ ] return book (by: 14 Mar 2025 06:00 pm)
      Now you have 2 tasks in the list.
      ____________________________________________________________
 ```
@@ -108,7 +110,7 @@ Expected output:
      ____________________________________________________________
      Here are the tasks in your list:
      1. [T][ ] borrow book
-     2. [D][ ] return book (by: Sunday)
+     2. [D][ ] return book (by: 14 Mar 2025 06:00 pm)
      3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
      ____________________________________________________________
 ```
@@ -128,7 +130,7 @@ Expected output:
      ____________________________________________________________
      Here are the matching tasks in your list:
      1. [T][ ] borrow book
-     2. [D][ ] return book (by: Sunday)
+     2. [D][ ] return book (by: 14 Mar 2025 06:00 pm)
      ____________________________________________________________
 ```
 

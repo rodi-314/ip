@@ -2,6 +2,8 @@ package siri.parser;
 
 import siri.tasks.*;
 
+import java.time.LocalDateTime;
+
 /**
  * Utility class that parses user commands
  */
@@ -163,7 +165,8 @@ public class Parser {
         int byIndex = userInput.indexOf("/by");
         String description = userInput.substring(9, byIndex - 1);
         String by = userInput.substring(byIndex + 4);
-        return new Deadline(description, false, by);
+        LocalDateTime datetime = LocalDateTime.parse(by);
+        return new Deadline(description, false, datetime);
     }
 
     /**
