@@ -62,8 +62,7 @@ public class Siri {
                         Ui.printTaskRemoved();
                         Ui.printTask(task);
 
-                    } catch (NumberFormatException | NullPointerException |
-                             ArrayIndexOutOfBoundsException e) { // Invalid task number inputted
+                    } catch (NumberFormatException | IndexOutOfBoundsException e) { // Invalid task number inputted
                         Ui.printInvalidTaskError();
                     }
 
