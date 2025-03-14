@@ -1,12 +1,22 @@
 package siri.storage;
 
 import siri.tasks.*;
+import siri.ui.Ui;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Utility class to load tasks from file or save tasks to file
+ */
 public class Storage {
+
+    /**
+     * Load tasks from file to the program
+     *
+     * @param taskList list of tasks
+     */
     public static void loadTasks(TaskList taskList) {
         try {
             Scanner scanner = SaveFile.getScanner();
@@ -25,11 +35,16 @@ public class Storage {
             try {
                 SaveFile.clearFile();
             } catch (IOException ex) {
-                System.out.println("Something went wrong: " + e.getMessage());
+                Ui.printError(e);
             }
         }
     }
 
+    /**
+     * Save tasks in program to file whenever there are changes to <code>taskList</code>
+     *
+     * @param taskList list of tasks
+     */
     public static void saveTasks(TaskList taskList) {
         try {
             SaveFile.clearFile();
@@ -54,7 +69,7 @@ public class Storage {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+            Ui.printError(e);
         }
     }
 }
