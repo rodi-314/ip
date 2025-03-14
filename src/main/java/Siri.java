@@ -3,7 +3,9 @@ import siri.storage.Storage;
 import siri.tasks.*;
 import siri.ui.Ui;
 
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+import java.util.zip.DataFormatException;
 
 public class Siri {
     private static final TaskList taskList = new TaskList();
@@ -32,7 +34,7 @@ public class Siri {
                         Ui.printTasksFound();
                         taskList.printFindTasks(description);
                     } catch (NullPointerException e) {
-                        throw new SiriException("Oops! The search field cannot be empty. \uD83D\uDE14");
+                        throw new SiriException("Oops! The search field cannot be empty. \uD83D\uDE32");
                     }
 
                 } else if (Parser.isMarkCommand(userInput) || Parser.isUnmarkCommand(userInput)) { // Mark/Unmark tasks
@@ -48,7 +50,7 @@ public class Siri {
 
                     } catch (NumberFormatException | NullPointerException |
                              IndexOutOfBoundsException e) { // Invalid task number inputted
-                        Ui.printInvalidTaskError();
+                        throw new SiriException("Please input a valid integer task number! \uD83D\uDE32");
                     }
 
                 } else if (Parser.isDeleteCommand(userInput)) { // Delete tasks
@@ -63,7 +65,7 @@ public class Siri {
                         Ui.printTask(task);
 
                     } catch (NumberFormatException | IndexOutOfBoundsException e) { // Invalid task number inputted
-                        Ui.printInvalidTaskError();
+                        throw new SiriException("Please input a valid integer task number! \uD83D\uDE32");
                     }
 
                 } else if (Parser.isTodoCommand(userInput)) { // Add new todo
@@ -72,18 +74,31 @@ public class Siri {
                         taskList.addTask(todo);
                         Ui.printTaskAdded(todo.getTaskString(), taskList);
                     } catch (NullPointerException e) {
-                        throw new SiriException("Oops! The description of a todo cannot be empty. \uD83D\uDE14");
+                        throw new SiriException("Oops! The description of a todo cannot be empty. \uD83D\uDE32");
                     }
 
                 } else if (Parser.isDeadlineCommand(userInput)) { // Add new deadline
-                    Deadline deadline = Parser.parseDeadlineCommand(userInput);
-                    taskList.addTask(deadline);
-                    Ui.printTaskAdded(deadline.getTaskString(), taskList);
+                    try {
+                        Deadline deadline = Parser.parseDeadlineCommand(userInput);
+                        taskList.addTask(deadline);
+                        Ui.printTaskAdded(deadline.getTaskString(), taskList);
+                    } catch (DataFormatException e) {
+                        throw new SiriException("Please enter the command in the correct format: " +
+                                "deadline DESCRIPTION /by DEADLINE \uD83D\uDE32 ");
+                    } catch (DateTimeParseException e) {
+                        throw new SiriException("Please enter DEADLINE in the correct format: " +
+                                "yyyy-mm-ddThh:mm \uD83D\uDE32 ");
+                    }
 
                 } else if (Parser.isEventCommand(userInput)) { // Add new event
-                    Event event = Parser.parseEventCommand(userInput);
-                    taskList.addTask(event);
-                    Ui.printTaskAdded(event.getTaskString(), taskList);
+                    try {
+                        Event event = Parser.parseEventCommand(userInput);
+                        taskList.addTask(event);
+                        Ui.printTaskAdded(event.getTaskString(), taskList);
+                    } catch (DataFormatException e) {
+                        throw new SiriException("Please enter the command in the correct format: " +
+                                "event DESCRIPTION /from START_TIME /to END_TIME \uD83D\uDE32 ");
+                    }
 
                 } else if (!Parser.isExitCommand(userInput)) { // Invalid input
                     throw new SiriException("Oops! I'm sorry, but I don't know what that means... \uD83D\uDE14 " +

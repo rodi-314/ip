@@ -10,9 +10,9 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
 1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project
    first)
 1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
+    1. Click `Open`.
+    1. Select the project directory, and click `OK`.
+    1. If there are any further prompts, accept the defaults.
 1. Configure the project to use **JDK 17** (not other versions) as explained
    in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
    In the same dialog, set the **Project language level** field to the `SDK default` option.
@@ -34,11 +34,8 @@ expect to find Java files.
 
 > ℹ️ Notes about the command format:
 >
-> - Words in `UPPER_CASE` are the parameters to be supplied by the user. \
-    > e.g. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo borrow book`.
->
-> - Extraneous parameters for commands that do not take in parameters (such as `list` and `exit`) will be ignored. \
-    > e.g. if the command specifies `list 123`, it will be interpreted as `list`.
+> Words in `UPPER_CASE` are the parameters to be supplied by the user. \
+> e.g. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo borrow book`.
 
 ### Adding to-do task: `todo`
 
@@ -47,10 +44,12 @@ Adds a to-do task to the task list.
 Format: `todo DESCRIPTION`
 
 Examples:
+
 - `todo borrow book`
 - `todo buy groceries`
 
 Expected output:
+
 ```
      ____________________________________________________________
      Got it. I've added this task:
@@ -68,10 +67,12 @@ Format: `deadline DESCRIPTION /by DEADLINE`
 > `DEADLINE` format: `yyyy-mm-ddThh:mm`
 
 Examples:
+
 - `deadline return book /by 2025-03-14T18:00`
 - `deadline cook dinner /by 2025-01-01T19:30`
 
 Expected output:
+
 ```
      ____________________________________________________________
      Got it. I've added this task:
@@ -87,10 +88,12 @@ Adds an event task to the task list.
 Format: `event DESCRIPTION /from START_TIME /to END_TIME`
 
 Examples:
+
 - `event project meeting /from Mon 2pm /to 4pm`
 - `event culinary event /from Tue 5pm /to 7pm`
 
 Expected output:
+
 ```
      ____________________________________________________________
      Got it. I've added this task:
@@ -106,6 +109,7 @@ Shows a list of all tasks in the task list.
 Format: `list`
 
 Expected output:
+
 ```
      ____________________________________________________________
      Here are the tasks in your list:
@@ -122,10 +126,12 @@ Search for tasks matching the given description.
 Format: `find DESCRIPTION`
 
 Examples:
+
 - `find book`
 - `find project`
 
 Expected output:
+
 ```
      ____________________________________________________________
      Here are the matching tasks in your list:
@@ -141,10 +147,12 @@ Marks the task with the corresponding task number specified as done.
 Format: `mark TASK_NUMBER`
 
 Examples:
+
 - `mark 1`
 - `mark 2`
 
 Expected output:
+
 ```
      ____________________________________________________________
      Nice! I've marked this task as done:
@@ -159,10 +167,12 @@ Marks the task with the corresponding task number specified as not done.
 Format: `unmark TASK_NUMBER`
 
 Examples:
+
 - `unmark 1`
 - `unmark 2`
 
 Expected output:
+
 ```
      ____________________________________________________________
      OK, I've marked this task as not done yet:
@@ -177,10 +187,12 @@ Deletes the task with the corresponding task number.
 Format: `delete TASK_NUMBER`
 
 Examples:
+
 - `delete 1`
 - `delete 2`
 
 Expected output:
+
 ```
      ____________________________________________________________
      Noted. I've removed this task:
@@ -195,6 +207,7 @@ Exits the program.
 Format: `bye`
 
 Expected output:
+
 ```
      ____________________________________________________________
      Bye. Hope to see you again soon!

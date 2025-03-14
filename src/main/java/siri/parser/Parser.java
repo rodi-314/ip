@@ -3,6 +3,8 @@ package siri.parser;
 import siri.tasks.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.zip.DataFormatException;
 
 /**
  * Utility class that parses user commands
@@ -16,7 +18,7 @@ public class Parser {
      * @return true if user entered exit command, false otherwise
      */
     public static boolean isExitCommand(String userInput) {
-        return userInput.startsWith("bye");
+        return userInput.equals("bye");
     }
 
     /**
@@ -26,7 +28,7 @@ public class Parser {
      * @return true if user entered list command, false otherwise
      */
     public static boolean isListCommand(String userInput) {
-        return userInput.startsWith("list");
+        return userInput.equals("list");
     }
 
     /**
@@ -36,7 +38,7 @@ public class Parser {
      * @return true if user entered find command, false otherwise
      */
     public static boolean isFindCommand(String userInput) {
-        return userInput.startsWith("find");
+        return userInput.startsWith("find ");
     }
 
     /**
@@ -46,7 +48,7 @@ public class Parser {
      * @return true if user entered mark command, false otherwise
      */
     public static boolean isMarkCommand(String userInput) {
-        return userInput.startsWith("mark");
+        return userInput.startsWith("mark ");
     }
 
     /**
@@ -56,7 +58,7 @@ public class Parser {
      * @return true if user entered unmark command, false otherwise
      */
     public static boolean isUnmarkCommand(String userInput) {
-        return userInput.startsWith("unmark");
+        return userInput.startsWith("unmark ");
     }
 
     /**
@@ -66,7 +68,7 @@ public class Parser {
      * @return true if user entered delete command, false otherwise
      */
     public static boolean isDeleteCommand(String userInput) {
-        return userInput.startsWith("delete");
+        return userInput.startsWith("delete ");
     }
 
     /**
@@ -76,7 +78,7 @@ public class Parser {
      * @return true if user entered todo command, false otherwise
      */
     public static boolean isTodoCommand(String userInput) {
-        return userInput.startsWith("todo");
+        return userInput.startsWith("todo ");
     }
 
     /**
@@ -86,7 +88,7 @@ public class Parser {
      * @return true if user entered deadline command, false otherwise
      */
     public static boolean isDeadlineCommand(String userInput) {
-        return userInput.startsWith("deadline");
+        return userInput.startsWith("deadline ");
     }
 
     /**
@@ -96,7 +98,7 @@ public class Parser {
      * @return true if user entered event command, false otherwise
      */
     public static boolean isEventCommand(String userInput) {
-        return userInput.startsWith("event");
+        return userInput.startsWith("event ");
     }
 
     /**
@@ -107,7 +109,7 @@ public class Parser {
      * @throws NullPointerException if description is empty
      */
     public static String parseFindCommand(String userInput) throws NullPointerException {
-        if (userInput.equals("find")) {
+        if (userInput.equals("find ")) {
             throw new NullPointerException();
         }
         return userInput.replace("find ", "");
@@ -148,7 +150,7 @@ public class Parser {
      * @throws NullPointerException if user did not enter a description
      */
     public static Todo parseTodoCommand(String userInput) throws NullPointerException {
-        if (userInput.equals("todo")) {
+        if (userInput.equals("todo ")) {
             throw new NullPointerException();
         }
         String description = userInput.replace("todo ", "");
@@ -160,8 +162,13 @@ public class Parser {
      *
      * @param userInput deadline command entered by user
      * @return deadline task
+     * @throws DataFormatException if deadline command is not in the correct format
+     * @throws DateTimeParseException if <code>DEADLINE</code> is not in the correct format
      */
-    public static Deadline parseDeadlineCommand(String userInput) {
+    public static Deadline parseDeadlineCommand(String userInput) throws DataFormatException, DateTimeParseException {
+        if (!userInput.matches("deadline .+ /by .+")) {
+            throw new DataFormatException();
+        }
         int byIndex = userInput.indexOf("/by");
         String description = userInput.substring(9, byIndex - 1);
         String by = userInput.substring(byIndex + 4);
@@ -174,8 +181,12 @@ public class Parser {
      *
      * @param userInput event command entered by user
      * @return event task
+     * @throws DateTimeParseException if event command is not in the correct format
      */
-    public static Event parseEventCommand(String userInput) {
+    public static Event parseEventCommand(String userInput) throws DataFormatException {
+        if (!userInput.matches("event .+ /from .+ /to .+")) {
+            throw new DataFormatException();
+        }
         int fromIndex = userInput.indexOf("/from");
         int toIndex = userInput.indexOf("/to");
         String description = userInput.substring(6, fromIndex - 1);

@@ -93,13 +93,6 @@ public class Ui {
     }
 
     /**
-     * Print error message for invalid task number entered
-     */
-    public static void printInvalidTaskError() {
-        System.out.println(SPACER + "Please input a valid integer task number");
-    }
-
-    /**
      * Print error message
      *
      * @param e exception
