@@ -1,4 +1,4 @@
-# Siri — Todo List Chatbot
+# Siri — To-do List Chatbot
 
 This is a chatbot created for users to keep track of their tasks, such as to-dos, deadlines, and events. It's named
 after Apple's virtual assistant _Siri_. Given below are instructions on how to use it.
@@ -40,9 +40,9 @@ expect to find Java files.
 > - Extraneous parameters for commands that do not take in parameters (such as `list` and `exit`) will be ignored. \
     > e.g. if the command specifies `list 123`, it will be interpreted as `list`.
 
-### Adding todo task: `todo`
+### Adding to-do task: `todo`
 
-Adds a todo task to the task list.
+Adds a to-do task to the task list.
 
 Format: `todo DESCRIPTION`
 
