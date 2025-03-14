@@ -14,7 +14,7 @@ public class Parser {
      * @return true if user entered exit command, false otherwise
      */
     public static boolean isExitCommand(String userInput) {
-        return userInput.equals("bye");
+        return userInput.startsWith("bye");
     }
 
     /**
@@ -24,7 +24,7 @@ public class Parser {
      * @return true if user entered list command, false otherwise
      */
     public static boolean isListCommand(String userInput) {
-        return userInput.equals("list");
+        return userInput.startsWith("list");
     }
 
     /**
