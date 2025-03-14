@@ -1,4 +1,4 @@
-# Siri — Todo List Chatbot
+# Siri — To-do List Chatbot — User Guide
 
 This is a chatbot created for users to keep track of their tasks, such as to-dos, deadlines, and events. It's named
 after Apple's virtual assistant _Siri_. Given below are instructions on how to use it.
@@ -10,9 +10,9 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
 1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project
    first)
 1. Open the project into Intellij as follows:
-    1. Click `Open`.
-    1. Select the project directory, and click `OK`.
-    1. If there are any further prompts, accept the defaults.
+   1. Click `Open`.
+   1. Select the project directory, and click `OK`.
+   1. If there are any further prompts, accept the defaults.
 1. Configure the project to use **JDK 17** (not other versions) as explained
    in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
    In the same dialog, set the **Project language level** field to the `SDK default` option.
@@ -40,15 +40,24 @@ expect to find Java files.
 > - Extraneous parameters for commands that do not take in parameters (such as `list` and `exit`) will be ignored. \
     > e.g. if the command specifies `list 123`, it will be interpreted as `list`.
 
-### Adding todo task: `todo`
+### Adding to-do task: `todo`
 
-Adds a todo task to the task list.
+Adds a to-do task to the task list.
 
 Format: `todo DESCRIPTION`
 
 Examples:
 - `todo borrow book`
 - `todo buy groceries`
+
+Expected output:
+```
+     ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] borrow book
+     Now you have 1 tasks in the list.
+     ____________________________________________________________
+```
 
 ### Adding deadline task: `deadline`
 
@@ -60,6 +69,15 @@ Examples:
 - `deadline return book /by Sunday`
 - `deadline cook dinner /by 6pm`
 
+Expected output:
+```
+     ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return book (by: Sunday)
+     Now you have 2 tasks in the list.
+     ____________________________________________________________
+```
+
 ### Adding event task: `event`
 
 Adds an event task to the task list.
@@ -70,11 +88,30 @@ Examples:
 - `event project meeting /from Mon 2pm /to 4pm`
 - `event culinary event /from Tue 5pm /to 7pm`
 
+Expected output:
+```
+     ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] project meeting (from: Mon 2pm to: 4pm)
+     Now you have 3 tasks in the list.
+     ____________________________________________________________
+```
+
 ### Listing tasks: `list`
 
 Shows a list of all tasks in the task list.
 
 Format: `list`
+
+Expected output:
+```
+     ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][ ] borrow book
+     2. [D][ ] return book (by: Sunday)
+     3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+     ____________________________________________________________
+```
 
 ### Finding tasks: `find`
 
@@ -86,6 +123,15 @@ Examples:
 - `find book`
 - `find project`
 
+Expected output:
+```
+     ____________________________________________________________
+     Here are the matching tasks in your list:
+     1. [T][ ] borrow book
+     2. [D][ ] return book (by: Sunday)
+     ____________________________________________________________
+```
+
 ### Marking task as done: `mark`
 
 Marks the task with the corresponding task number specified as done.
@@ -95,6 +141,14 @@ Format: `mark TASK_NUMBER`
 Examples:
 - `mark 1`
 - `mark 2`
+
+Expected output:
+```
+     ____________________________________________________________
+     Nice! I've marked this task as done:
+       [T][X] borrow book
+     ____________________________________________________________
+```
 
 ### Marking task as not done: `unmark`
 
@@ -106,6 +160,14 @@ Examples:
 - `unmark 1`
 - `unmark 2`
 
+Expected output:
+```
+     ____________________________________________________________
+     OK, I've marked this task as not done yet:
+       [T][ ] borrow book
+     ____________________________________________________________
+```
+
 ### Removing task: `delete`
 
 Deletes the task with the corresponding task number.
@@ -116,11 +178,26 @@ Examples:
 - `delete 1`
 - `delete 2`
 
-### Exiting the program: `exit`
+Expected output:
+```
+     ____________________________________________________________
+     Noted. I've removed this task:
+       [T][ ] borrow book
+     ____________________________________________________________
+```
+
+### Exiting the program: `bye`
 
 Exits the program.
 
-Format: `exit`
+Format: `bye`
+
+Expected output:
+```
+     ____________________________________________________________
+     Bye. Hope to see you again soon!
+     ____________________________________________________________
+```
 
 ### Saving tasks
 

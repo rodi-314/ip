@@ -79,7 +79,7 @@ public class TaskList {
         int foundCount = 1;
         for (Task task : this.taskList) {
             if (task.getDescription().contains(description)) {
-                System.out.printf("    %d. %s%n", foundCount, task.getTaskString());
+                System.out.printf("     %d. %s%n", foundCount, task.getTaskString());
                 foundCount++;
             }
         }

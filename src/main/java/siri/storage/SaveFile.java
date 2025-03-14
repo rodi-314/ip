@@ -10,7 +10,7 @@ import java.util.Scanner;
  * Utility class to write to and read from files
  */
 public class SaveFile {
-    public static final String FILEPATH = "data/siri.txt";
+    public static final String FILEPATH = "./data/siri.txt";
 
     /**
      * Clears the file by writing an empty string to it
