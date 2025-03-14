@@ -33,7 +33,7 @@ public class Storage {
             }
         } catch (FileNotFoundException e) {
             try {
-                SaveFile.clearFile();
+                SaveFile.createFile();
             } catch (IOException ex) {
                 Ui.printError(e);
             }
