@@ -5,6 +5,8 @@ import siri.ui.Ui;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -26,7 +28,8 @@ public class Storage {
                 if (data[0].equals("T")) {
                     taskList.addTask(new Todo(data[2], Boolean.parseBoolean(data[1])));
                 } else if (data[0].equals("D")) {
-                    taskList.addTask(new Deadline(data[2], Boolean.parseBoolean(data[1]), data[3]));
+                    taskList.addTask(new Deadline(data[2], Boolean.parseBoolean(data[1]),
+                            LocalDateTime.parse(data[3])));
                 } else {
                     taskList.addTask(new Event(data[2], Boolean.parseBoolean(data[1]), data[3], data[4]));
                 }
@@ -58,7 +61,8 @@ public class Storage {
                     SaveFile.appendToFile("D" + "|" +
                             deadline.getStatus() + "|" +
                             deadline.getDescription() + "|" +
-                            deadline.getBy() + System.lineSeparator());
+                            deadline.getBy() +
+                            System.lineSeparator());
                 } else {
                     Event event = (Event) task;
                     SaveFile.appendToFile("E" + "|" +

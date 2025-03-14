@@ -1,20 +1,23 @@
 package siri.tasks;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents a deadline task
  */
 public class Deadline extends Task {
 
-    protected String by;
+    protected LocalDateTime by;
 
     /**
      * Creates a deadline task instance
      *
      * @param description description of deadline task
-     * @param isDone boolean describing whether deadline task is done
-     * @param by deadline of task
+     * @param isDone      boolean describing whether deadline task is done
+     * @param by          deadline of task
      */
-    public Deadline(String description, boolean isDone, String by) {
+    public Deadline(String description, boolean isDone, LocalDateTime by) {
         super(description, isDone);
         this.by = by;
     }
@@ -24,7 +27,7 @@ public class Deadline extends Task {
      *
      * @return deadline
      */
-    public String getBy() {
+    public LocalDateTime getBy() {
         return by;
     }
 
@@ -35,6 +38,7 @@ public class Deadline extends Task {
      */
     @Override
     public String getTaskString() {
-        return "[D]" + super.getTaskString() + " (by: " + this.by + ")";
+        return "[D]" + super.getTaskString() +
+                " (by: " + this.by.format(DateTimeFormatter.ofPattern("dd MMM yyyy hh:mm a")) + ")";
     }
 }
