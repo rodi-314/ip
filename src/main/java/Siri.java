@@ -6,7 +6,6 @@ import siri.ui.Ui;
 import java.util.Scanner;
 
 public class Siri {
-    // Initialise taskList
     private static final TaskList taskList = new TaskList();
 
     public static void main(String[] args) {
@@ -26,6 +25,15 @@ public class Siri {
                 if (Parser.isListCommand(userInput)) { // List tasks
                     Ui.printListTasks();
                     taskList.printTaskList();
+
+                } else if (Parser.isFindCommand(userInput)) { // Find tasks
+                    try {
+                        String description = Parser.parseFindCommand(userInput);
+                        Ui.printTasksFound();
+                        taskList.printFindTasks(description);
+                    } catch (NullPointerException e) {
+                        throw new SiriException("Oops! The search field cannot be empty. \uD83D\uDE14");
+                    }
 
                 } else if (Parser.isMarkCommand(userInput) || Parser.isUnmarkCommand(userInput)) { // Mark/Unmark tasks
                     try {
@@ -65,7 +73,7 @@ public class Siri {
                         taskList.addTask(todo);
                         Ui.printTaskAdded(todo.getTaskString(), taskList);
                     } catch (NullPointerException e) {
-                        throw new SiriException("    Oops! The description of a todo cannot be empty. \uD83D\uDE14");
+                        throw new SiriException("Oops! The description of a todo cannot be empty. \uD83D\uDE14");
                     }
 
                 } else if (Parser.isDeadlineCommand(userInput)) { // Add new deadline
@@ -79,7 +87,7 @@ public class Siri {
                     Ui.printTaskAdded(event.getTaskString(), taskList);
 
                 } else if (!Parser.isExitCommand(userInput)) { // Invalid input
-                    throw new SiriException("    Oops! I'm sorry, but I don't know what that means... \uD83D\uDE14 " +
+                    throw new SiriException("Oops! I'm sorry, but I don't know what that means... \uD83D\uDE14 " +
                             "Please provide a valid input!");
                 }
 
